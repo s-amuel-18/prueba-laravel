@@ -1,0 +1,29 @@
+01. alteral la tabla de usuarios y agregar un campo extra donde se muestre el rol de este.
+    - rol
+
+02 creacion de tablas.
+    # Users
+        - id
+        - nombre
+        - email
+        - rol
+        - timestamp
+    # Compras
+        - id
+        - user_id
+        - producto_id
+        - facturado [0, 1]
+        - timestamp
+    # compra_factura
+        - id
+        - factura_id
+        - compra_id
+    # Facturas
+        - id
+        - user_id
+        - timestamp
+    # Productos
+        - id
+        - nombre
+        - precio_con_impuesto
+        - procentaje_impuesto
