@@ -46,7 +46,27 @@ class FacturaController extends Controller
             return redirect()->route("producto.index");
         }
 
+        $productos = Compra::select(
+            DB::raw('sum(productos.precio_con_impuesto) as precio_con_impuesto'),
+            DB::raw("count(productos.id) as count_productos"),
+            DB::raw("productos.nombre as nombre"),
+            DB::raw("sum(productos.precio_con_impuesto * ((100 - productos.procentaje_impuesto) * 0.01)) as precio_sin_impuesto"),
+            DB::raw("sum(productos.procentaje_impuesto) as procentaje_impuesto"),
+        )
+            ->join('productos', 'compras.producto_id', '=', 'productos.id')
+            ->join('compra_factura', 'compra_factura.compra_id', '=', 'compras.id')
+            ->where("compra_factura.factura_id", "=", $factura->id)
+            ->groupBy('compras.producto_id')
+            ->orderBy("count_productos")
+            ->get();
+
+        // dd($productos);
+        $data["productos"] = $productos;
+
         $data["factura"] = $factura;
+        // dd($factura->);
+
+
         return view("factura.show", $data);
     }
 

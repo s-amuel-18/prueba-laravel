@@ -29,6 +29,7 @@
                     <tr>
                         <th>#</th>
                         <th>Producto</th>
+                        <th>Cantidad</th>
                         {{-- <th>cliente</th> --}}
                         <th>precio</th>
                         <th>% impuesto</th>
@@ -38,22 +39,24 @@
 
                 <tbody>
 
-                    @foreach ($factura->compras as $i => $compra)
+                    @foreach ($productos as $i => $producto)
                         @php
-                        $precio_sin_impuesto = $compra->producto->precio_con_impuesto * ((100 - $compra->producto->procentaje_impuesto) * 0.01);
+                        // $precio_sin_impuesto = $compra->producto->precio_con_impuesto * ((100 - $compra->producto->procentaje_impuesto) * 0.01);
 
-                            $total_precio += $precio_sin_impuesto;
-                            $total_impuesto += $compra->producto->procentaje_impuesto;
-                            $total_precio_impuesto += $compra->producto->precio_con_impuesto;
+                            $total_precio += $producto->precio_sin_impuesto;
+                            $total_impuesto += $producto->procentaje_impuesto;
+                            $total_precio_impuesto += $producto->precio_con_impuesto;
                         @endphp
 
                         <tr>
                             <td>{{ $i + 1 }}</td>
-                            <td>{{ $compra->producto->nombre }}</td>
+                            <td>{{ $producto->nombre }}</td>
+                            <td>{{ $producto->count_productos }}</td>
                             {{-- <td>{{ $compra->factura[0]->cliente->name }}</td> --}}
-                            <td>{{ $precio_sin_impuesto }}</td>
-                            <td>{{ $compra->producto->procentaje_impuesto }}</td>
-                            <td>{{ $compra->producto->precio_con_impuesto  }}</td>
+                            <td>{{ $producto->precio_sin_impuesto }}</td>
+                            <td>{{ $producto->procentaje_impuesto }}</td>
+                            {{-- <td>{{ $compra->producto->procentaje_impuesto }}</td> --}}
+                            <td>{{ $producto->precio_con_impuesto  }}</td>
                             {{-- <td>{{ $compra->compras->count() }}</td> --}}
                         </tr>
                     @endforeach
@@ -62,6 +65,7 @@
 
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th>{{$total_precio}}</th>
