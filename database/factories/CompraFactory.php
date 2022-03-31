@@ -16,7 +16,7 @@ class CompraFactory extends Factory
     public function definition()
     {
         return [
-            "user_id" => 1,
+            "user_id" => User::all()->random()->id,
             "producto_id" => Producto::all()->random()->id
         ];
     }
